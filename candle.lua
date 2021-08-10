@@ -18,6 +18,7 @@ function Candle.array.concat(table0, table1)
 end
 
 function Candle.array.flat(table, depth)
+    depth = depth or 1
     if depth == 0 then return table end
 
     local new = {}    
@@ -28,6 +29,8 @@ function Candle.array.flat(table, depth)
             table.insert(new, v)
         end
     end
+    
+    return Candle.array.flat(new, depth-1)
 end
 
 return Candle
