@@ -1,2 +1,4 @@
 local candle = require("candle")
-print(candle.array.print({1,2,3})
+
+candle.flat({1, { 2 , 3, { 5, 6 } }, 4}, 1).flat().filter(function(v) return v <= 3 end).print()
+
