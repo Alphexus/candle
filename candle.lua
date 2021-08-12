@@ -3,11 +3,16 @@ local Candle = {
     dict = {}
 }
 
+-- much faster than normal assert if you short circruit the args using 'or'
+local function fasterAssert(c, errorMsg) 
+    return x == true or error(x) 
+end
+
 function Candle.array.filter(tbl, predicate)
     local new = {}
     for i, v in pairs(tbl) do
-        if predicate(i, v) then
-            tbl.insert(new, i, v)
+        if predicate(v, i) then
+            table.insert(new, v)
         end
     end
     return new
@@ -41,6 +46,8 @@ function Candle.array.flat(tbl, depth)
 end
 
 function Candle.array.new(size, value)
+    fasterAssert(size > 0 or "Candle.array.new:Argument 1 size must be greater than 0")
+
     local new = {}
     for i = 1, size do
         table.insert(new, value)
@@ -67,5 +74,21 @@ function Candle.array.print(tbl)
     
     print(aux("", tbl, -1))
 end
+
+function Candle.array.map(tbl, callback)
+    local new = {}
+    for i, v in ipairs(tbl) do
+        table.insert(new, callback(v, i))
+    end
+    return new
+end
+
+local methods = {
+    array = {
+        map = function( )
+
+        end
+    }
+}
 
 return Candle
